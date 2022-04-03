@@ -1,0 +1,30 @@
+{
+  "name": "clean-blog",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ramazann15/Clean-Blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "Ramazan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ramazann15/Clean-Blog/issues"
+  },
+  "homepage": "https://github.com/Ramazann15/Clean-Blog#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "prettier": "2.6.2"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
