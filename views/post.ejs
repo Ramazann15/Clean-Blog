@@ -25,11 +25,18 @@
 
   <!-- Post Content -->
   <article>
-    <div class="container">
+    <article class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p><%= post.detail %></p>
+        </div>
+      </div>
+</article>
 
+<a  href="/post/edit/<%= post._id %>" class="btn btn-primary "><span>Update Details</span></a>	
+<a href="/post/<%=post._id%>?_method=DELETE" class="btn btn-danger " onclick="return confirm('Are you sure')"
+  ><span>Delete Photo</span></a>
+  
   <hr>
 
   <%-include('Partials/_footer')-%>

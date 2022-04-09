@@ -1,55 +1,41 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
-const path =  require("path")
-const ejs = require("ejs")
-
-const Posts = require("./models/Posts")
+const PostController = require('./controllers/postControllers');
+const PageController = require('./controllers/pageController');
 
 const app = new express();
 
 //Database connection
-const db = "mongodb+srv://<username>:<password>@cluster0.t3mey.mongodb.net/cleanblog-test-db?retryWrites=true&w=majority"
-mongoose.connect(db,{
-  useNewUrlParser :true,
-  useUnifiedTopology:true,
-})
+const db =
+  'mongodb+srv://<username>:<password>@cluster0.t3mey.mongodb.net/cleanblog-test-db?retryWrites=true&w=majority';
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Template Engine
-app.set("view engine", "ejs")
+app.set('view engine', 'ejs');
 
 //Middleware
-app.use(express.static("public"))
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
-
-app.get('/', async (req, res ) => {
-  const posts = await Posts.find({})
-  res.render("index",{
-    posts
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
   })
-});
+);
 
-app.get('/about', (req, res ) => {
-  res.render("about")
-});
-
-app.get('/posts/:id', async(req, res ) => {
-  const post= await Posts.findById(req.params.id)
-  res.render("post",{
-    post
-  }
-  )
-});
-
-app.get('/add', (req, res ) => {
-  res.render("add_post")
-});
-
-app.post("/addpost", async(req,res)=>{
-  await Posts.create(req.body)
-  res.redirect("/")
-})
+app.get('/', PostController.getAllPost);
+app.get('/about', PageController.getAboutPage);
+app.get('/posts/:id', PostController.getPost);
+app.get('/add', PageController.getAddPage);
+app.post('/addpost', PostController.createPost);
+app.get('/post/edit/:id', PageController.getEditPage);
+app.put('/post/:id', PostController.updadePost);
+app.delete('/post/:id', PostController.deletePost);
 
 const port = 3000;
 app.listen(port, () => {
