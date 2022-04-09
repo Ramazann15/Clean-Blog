@@ -9,7 +9,7 @@ const Posts = require("./models/Posts")
 const app = new express();
 
 //Database connection
-const db = "'mongodb://localhost/cleanblog-test-db"
+const db = "mongodb+srv://<username>:<password>@cluster0.t3mey.mongodb.net/cleanblog-test-db?retryWrites=true&w=majority"
 mongoose.connect(db,{
   useNewUrlParser :true,
   useUnifiedTopology:true,
@@ -32,6 +32,14 @@ app.get('/', async (req, res ) => {
 
 app.get('/about', (req, res ) => {
   res.render("about")
+});
+
+app.get('/posts/:id', async(req, res ) => {
+  const post= await Posts.findById(req.params.id)
+  res.render("post",{
+    post
+  }
+  )
 });
 
 app.get('/add', (req, res ) => {
